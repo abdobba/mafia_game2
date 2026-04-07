@@ -9,6 +9,7 @@
 <body>
 <div class="container">
  
+  <!-- Screen 1: Count -->
   <div id="screen-count" class="screen active">
     <h2>كام لاعب هيلعبوا؟</h2>
     <div class="card" style="text-align:center; padding: 1.5rem;">
@@ -21,6 +22,7 @@
     </div>
   </div>
  
+  <!-- Screen 2: Names -->
   <div id="screen-names" class="screen">
     <h2>أسماء اللاعبين</h2>
     <div id="saved-names-banner" class="card" style="display:none; background:#f0f7ff; border-color:#c0d8f0; padding: 0.9rem 1.2rem; margin-bottom: 0.8rem;">
@@ -35,6 +37,7 @@
     <button class="btn-main" onclick="goToRoles()">التالي ←</button>
   </div>
  
+  <!-- Screen 3: Roles -->
   <div id="screen-roles" class="screen">
     <h2>توزيع الأدوار</h2>
     <div class="card">
@@ -56,6 +59,7 @@
     <button class="btn-main" onclick="startGame()">ابدأ اللعبة ←</button>
   </div>
  
+  <!-- Screen 4: Reveal -->
   <div id="screen-reveal" class="screen">
     <div class="cover" id="cover-view">
       <p>اللاعب التالي</p>
@@ -74,6 +78,7 @@
     </div>
   </div>
  
+  <!-- Screen 5: Done -->
   <div id="screen-done" class="screen">
     <div class="done-screen">
       <div style="font-size:60px;margin-bottom:1rem;">🎉</div>
@@ -83,6 +88,17 @@
     </div>
   </div>
  
+</div>
+ 
+<!-- Confirm overlay -->
+<div id="confirm-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center; padding:1.5rem;">
+  <div style="background:#fff; border-radius:16px; padding:1.5rem; width:100%; max-width:360px; text-align:center;">
+    <div style="font-size:32px; margin-bottom:0.8rem;">🎮</div>
+    <div style="font-size:16px; font-weight:700; margin-bottom:0.6rem;">تأكيد بدء اللعبة</div>
+    <div id="confirm-summary" style="font-size:13px; color:#666; margin-bottom:1.2rem; line-height:1.8;"></div>
+    <button class="btn-main" onclick="confirmStart()" style="margin-bottom:0.6rem;">ابدأ التوزيع ✓</button>
+    <button onclick="cancelStart()" style="width:100%; padding:11px; border-radius:10px; font-size:15px; color:#555;">رجوع</button>
+  </div>
 </div>
 <script src="app.js"></script>
 </body>
