@@ -21,14 +21,42 @@ function goToNames() {
   for (let i = 0; i < playerCount; i++) {
     grid.innerHTML += '<input type="text" placeholder="لاعب ' + (i+1) + '" id="pname-' + i + '" />';
   }
+
+  // Show/hide saved names banner
+  const saved = getSavedNames();
+  const banner = document.getElementById('saved-names-banner');
+  if (saved.length > 0) {
+    banner.style.display = 'block';
+    document.getElementById('saved-names-preview').textContent = saved.join(' · ');
+  } else {
+    banner.style.display = 'none';
+  }
+
   showScreen('screen-names');
 }
 
+function getSavedNames() {
+  try { return JSON.parse(localStorage.getItem('mafia_names') || '[]'); } catch { return []; }
+}
+
+function loadSavedNames() {
+  const saved = getSavedNames();
+  if (!saved.length) return;
+  for (let i = 0; i < playerCount; i++) {
+    const input = document.getElementById('pname-' + i);
+    if (input && saved[i]) input.value = saved[i];
+  }
+  document.getElementById('saved-names-banner').style.display = 'none';
+}
+
 function goToRoles() {
+  const names = [];
   for (let i = 0; i < playerCount; i++) {
     const v = document.getElementById('pname-' + i).value.trim();
     if (!v) { alert('من فضلك اكتب اسم كل لاعب'); return; }
+    names.push(v);
   }
+  localStorage.setItem('mafia_names', JSON.stringify(names));
   updateCitizens();
   showScreen('screen-roles');
 }

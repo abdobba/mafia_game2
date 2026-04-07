@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-
+ 
   <div id="screen-count" class="screen active">
     <h2>كام لاعب هيلعبوا؟</h2>
     <div class="card" style="text-align:center; padding: 1.5rem;">
@@ -20,16 +20,21 @@
       <button class="btn-main" onclick="goToNames()">التالي ←</button>
     </div>
   </div>
-
+ 
   <div id="screen-names" class="screen">
     <h2>أسماء اللاعبين</h2>
+    <div id="saved-names-banner" class="card" style="display:none; background:#f0f7ff; border-color:#c0d8f0; padding: 0.9rem 1.2rem; margin-bottom: 0.8rem;">
+      <div style="font-size:12px;color:#666;margin-bottom:6px;">اللاعبين اللي لعبوا آخر مرة:</div>
+      <div id="saved-names-preview" style="font-size:13px;font-weight:600;color:#222;margin-bottom:10px;line-height:1.6;"></div>
+      <button onclick="loadSavedNames()" style="width:100%;background:#1a6fc4;color:#fff;border-color:#1a6fc4;border-radius:10px;padding:10px;font-size:14px;">✓ استخدم نفس اللاعبين</button>
+    </div>
     <div class="card">
       <div style="font-size:13px;color:#888;margin-bottom:10px;">اكتب اسم كل لاعب</div>
       <div class="names-grid" id="names-grid"></div>
     </div>
     <button class="btn-main" onclick="goToRoles()">التالي ←</button>
   </div>
-
+ 
   <div id="screen-roles" class="screen">
     <h2>توزيع الأدوار</h2>
     <div class="card">
@@ -50,7 +55,7 @@
     </div>
     <button class="btn-main" onclick="startGame()">ابدأ اللعبة ←</button>
   </div>
-
+ 
   <div id="screen-reveal" class="screen">
     <div class="cover" id="cover-view">
       <p>اللاعب التالي</p>
@@ -68,7 +73,7 @@
       </div>
     </div>
   </div>
-
+ 
   <div id="screen-done" class="screen">
     <div class="done-screen">
       <div style="font-size:60px;margin-bottom:1rem;">🎉</div>
@@ -77,7 +82,7 @@
       <button class="btn-main" onclick="resetGame()" style="margin-top:1rem;">لعبة جديدة</button>
     </div>
   </div>
-
+ 
 </div>
 <script src="app.js"></script>
 </body>
