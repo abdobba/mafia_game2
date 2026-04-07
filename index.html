@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>لعبة المافيا</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+  <div id="screen-count" class="screen active">
+    <h2>كام لاعب هيلعبوا؟</h2>
+    <div class="card" style="text-align:center; padding: 1.5rem;">
+      <div class="num-controls">
+        <button onclick="changeCount(-1)">−</button>
+        <div class="num-big" id="player-count">6</div>
+        <button onclick="changeCount(1)">+</button>
+      </div>
+      <button class="btn-main" onclick="goToNames()">التالي ←</button>
+    </div>
+  </div>
+
+  <div id="screen-names" class="screen">
+    <h2>أسماء اللاعبين</h2>
+    <div class="card">
+      <div style="font-size:13px;color:#888;margin-bottom:10px;">اكتب اسم كل لاعب</div>
+      <div class="names-grid" id="names-grid"></div>
+    </div>
+    <button class="btn-main" onclick="goToRoles()">التالي ←</button>
+  </div>
+
+  <div id="screen-roles" class="screen">
+    <h2>توزيع الأدوار</h2>
+    <div class="card">
+      <div class="role-row">
+        <div><div class="role-name">المافيا</div><div class="role-desc">تقتل كل ليلة</div></div>
+        <div class="counter"><button onclick="change('mafia',-1)">−</button><span id="cnt-mafia">1</span><button onclick="change('mafia',1)">+</button></div>
+      </div>
+      <div class="role-row">
+        <div><div class="role-name">المحقق</div><div class="role-desc">يكشف هوية لاعب كل ليلة</div></div>
+        <div class="counter"><button onclick="change('detective',-1)">−</button><span id="cnt-detective">1</span><button onclick="change('detective',1)">+</button></div>
+      </div>
+      <div class="role-row">
+        <div><div class="role-name">الطبيب</div><div class="role-desc">ينقذ لاعب من القتل</div></div>
+        <div class="counter"><button onclick="change('doctor',-1)">−</button><span id="cnt-doctor">1</span><button onclick="change('doctor',1)">+</button></div>
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:#888;">مواطنون عاديون: <span id="citizens-count" style="font-weight:700;">—</span></div>
+      <div class="warn" id="warn-msg"></div>
+    </div>
+    <button class="btn-main" onclick="startGame()">ابدأ اللعبة ←</button>
+  </div>
+
+  <div id="screen-reveal" class="screen">
+    <div class="cover" id="cover-view">
+      <p>اللاعب التالي</p>
+      <div class="name" id="next-player-name"></div>
+      <button class="btn-main" onclick="showRole()">اضغط لتشوف دورك</button>
+    </div>
+    <div id="role-view" style="display:none;">
+      <div class="progress" id="progress-text"></div>
+      <div class="player-reveal">
+        <div class="role-badge" id="role-emoji"></div>
+        <div class="player-name-big" id="reveal-player-name"></div>
+        <div class="role-title" id="reveal-role-title"></div>
+        <div class="role-info" id="reveal-role-info"></div>
+        <button class="btn-main" onclick="nextPlayer()">فهمت — خليني أغطي الشاشة</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-done" class="screen">
+    <div class="done-screen">
+      <div style="font-size:60px;margin-bottom:1rem;">🎉</div>
+      <h2>كل اللاعبين شافوا أدوارهم!</h2>
+      <p style="margin-top:8px;">اللعبة جاهزة — يمكنكم تبدأوا</p>
+      <button class="btn-main" onclick="resetGame()" style="margin-top:1rem;">لعبة جديدة</button>
+    </div>
+  </div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>
