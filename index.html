@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
- 
+
   <!-- Screen 1: Count -->
   <div id="screen-count" class="screen active">
     <h2>كام لاعب هيلعبوا؟</h2>
@@ -21,10 +21,13 @@
       <button class="btn-main" onclick="goToNames()">التالي ←</button>
     </div>
   </div>
- 
+
   <!-- Screen 2: Names -->
   <div id="screen-names" class="screen">
-    <h2>أسماء اللاعبين</h2>
+    <div class="screen-header">
+      <button class="btn-back" onclick="showScreen('screen-count')">→ رجوع</button>
+      <h2>أسماء اللاعبين</h2>
+    </div>
     <div id="saved-names-banner" class="card" style="display:none; background:#f0f7ff; border-color:#c0d8f0; padding: 0.9rem 1.2rem; margin-bottom: 0.8rem;">
       <div style="font-size:12px;color:#666;margin-bottom:6px;">اللاعبين اللي لعبوا آخر مرة:</div>
       <div id="saved-names-preview" style="font-size:13px;font-weight:600;color:#222;margin-bottom:10px;line-height:1.6;"></div>
@@ -36,10 +39,13 @@
     </div>
     <button class="btn-main" onclick="goToRoles()">التالي ←</button>
   </div>
- 
+
   <!-- Screen 3: Roles -->
   <div id="screen-roles" class="screen">
-    <h2>توزيع الأدوار</h2>
+    <div class="screen-header">
+      <button class="btn-back" onclick="showScreen('screen-names')">→ رجوع</button>
+      <h2>توزيع الأدوار</h2>
+    </div>
     <div class="card">
       <div class="role-row">
         <div><div class="role-name">المافيا</div><div class="role-desc">تقتل كل ليلة</div></div>
@@ -58,7 +64,7 @@
     </div>
     <button class="btn-main" onclick="startGame()">ابدأ اللعبة ←</button>
   </div>
- 
+
   <!-- Screen 4: Reveal -->
   <div id="screen-reveal" class="screen">
     <div class="cover" id="cover-view">
@@ -77,29 +83,40 @@
       </div>
     </div>
   </div>
- 
+
   <!-- Screen 5: Done -->
   <div id="screen-done" class="screen">
     <div class="done-screen">
       <div style="font-size:60px;margin-bottom:1rem;">🎉</div>
       <h2>كل اللاعبين شافوا أدوارهم!</h2>
-      <p style="margin-top:8px;">اللعبة جاهزة — يمكنكم تبدأوا</p>
-      <button class="btn-main" onclick="resetGame()" style="margin-top:1rem;">لعبة جديدة</button>
+      <p style="margin-top:8px; margin-bottom:1.2rem;">اللعبة جاهزة — يمكنكم تبدأوا</p>
+
+      <!-- Host view toggle -->
+      <button id="host-btn" onclick="toggleHostView()" style="width:100%;padding:12px;border-radius:10px;font-size:15px;margin-bottom:0.8rem;background:#f5f5f5;border-color:#ddd;">👁 وضع المضيف</button>
+      <div id="host-panel" style="display:none;">
+        <div class="card" style="text-align:right; margin-bottom:0.8rem;">
+          <div style="font-size:12px;color:#888;margin-bottom:10px;">للمضيف فقط — لا تعرضه للاعبين</div>
+          <div id="host-summary"></div>
+        </div>
+      </div>
+
+      <button class="btn-main" onclick="resetGame()">لعبة جديدة</button>
     </div>
   </div>
- 
+
 </div>
- 
+
 <!-- Confirm overlay -->
-<div id="confirm-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center; padding:1.5rem;">
+<div id="confirm-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:100; align-items:center; justify-content:center; padding:1.5rem;">
   <div style="background:#fff; border-radius:16px; padding:1.5rem; width:100%; max-width:360px; text-align:center;">
     <div style="font-size:32px; margin-bottom:0.8rem;">🎮</div>
     <div style="font-size:16px; font-weight:700; margin-bottom:0.6rem;">تأكيد بدء اللعبة</div>
-    <div id="confirm-summary" style="font-size:13px; color:#666; margin-bottom:1.2rem; line-height:1.8;"></div>
+    <div id="confirm-summary" style="font-size:13px; color:#555; margin-bottom:1.2rem; line-height:2;"></div>
     <button class="btn-main" onclick="confirmStart()" style="margin-bottom:0.6rem;">ابدأ التوزيع ✓</button>
-    <button onclick="cancelStart()" style="width:100%; padding:11px; border-radius:10px; font-size:15px; color:#555;">رجوع</button>
+    <button onclick="cancelStart()" style="width:100%; padding:11px; border-radius:10px; font-size:15px; color:#555; border-color:#ddd;">رجوع</button>
   </div>
 </div>
+
 <script src="app.js"></script>
 </body>
 </html>
