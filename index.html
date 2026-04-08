@@ -4,14 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>لعبة المافيا</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="container">
 
   <!-- Screen 1: Count -->
   <div id="screen-count" class="screen active">
-    <h2>كام لاعب هيلعبوا؟</h2>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+      <h2 style="margin-bottom:0;">كام لاعب هيلعبوا؟</h2>
+      <button id="sound-btn" onclick="toggleSound()" style="width:40px;height:40px;border-radius:50%;padding:0;font-size:18px;border-color:#ddd;background:#fff;">🔊</button>
+    </div>
     <div class="card" style="text-align:center; padding: 1.5rem;">
       <div class="num-controls">
         <button onclick="changeCount(-1)">−</button>
@@ -28,6 +31,7 @@
       <button class="btn-back" onclick="showScreen('screen-count')">→ رجوع</button>
       <h2>أسماء اللاعبين</h2>
     </div>
+    <div id="auto-loaded-notice" style="display:none; font-size:12px; color:#2a7a2a; background:#f0fff0; border:1px solid #b8e6b8; border-radius:8px; padding:7px 12px; margin-bottom:0.8rem;">✓ تم تحميل الأسماء المحفوظة</div>
     <div id="saved-names-banner" class="card" style="display:none; background:#f0f7ff; border-color:#c0d8f0; padding: 0.9rem 1.2rem; margin-bottom: 0.8rem;">
       <div style="font-size:12px;color:#666;margin-bottom:6px;">اللاعبين اللي لعبوا آخر مرة:</div>
       <div id="saved-names-preview" style="font-size:13px;font-weight:600;color:#222;margin-bottom:10px;line-height:1.6;"></div>
@@ -117,6 +121,6 @@
   </div>
 </div>
 
-<script src="app.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
