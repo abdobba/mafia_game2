@@ -236,6 +236,8 @@ function showRole() {
   const p  = assignedRoles[currentIndex];
   const rd = roleData[p.role];
   document.getElementById('progress-text').textContent        = (currentIndex + 1) + ' من ' + assignedRoles.length;
+  const fill = document.getElementById('progress-bar-fill');
+  if (fill) fill.style.width = ((currentIndex + 1) / assignedRoles.length * 100) + '%';
   document.getElementById('role-emoji').textContent           = rd.emoji;
   document.getElementById('reveal-player-name').textContent   = p.name;
   document.getElementById('reveal-role-title').textContent    = rd.title;
