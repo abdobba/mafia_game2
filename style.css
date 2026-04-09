@@ -437,3 +437,134 @@ input[type=text]:focus {
 /* Confirm */
 .confirm-summary { font-size: 14px; color: #aaa; margin-bottom: 1.2rem; line-height: 2.2; }
 .confirm-summary b { color: #fff; }
+
+/* ══════════════════════════════════════
+   NEW FEATURES STYLES
+══════════════════════════════════════ */
+
+/* ── Stats bar ── */
+.stats-bar {
+  display: flex; gap: 8px; justify-content: center;
+  flex-wrap: wrap; margin-bottom: 1rem;
+}
+.stat-item {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 6px 14px;
+  font-size: 13px; color: #aaa; font-weight: 600;
+}
+.stat-item span { color: #e8354a; font-weight: 900; }
+
+/* ── Phase card ── */
+.phase-card {
+  transition: background 0.4s, border-color 0.4s;
+  margin-bottom: 1rem;
+}
+.phase-card.day {
+  background: rgba(255,200,50,0.07);
+  border-color: rgba(255,200,50,0.2);
+}
+.phase-card.night {
+  background: rgba(80,80,180,0.12);
+  border-color: rgba(120,120,220,0.25);
+}
+.phase-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.phase-label { font-size: 18px; font-weight: 900; color: #fff; }
+.btn-phase {
+  padding: 8px 16px; border-radius: 10px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  color: #eee; font-size: 13px; font-weight: 700;
+  font-family: 'Tajawal', Arial, sans-serif;
+}
+.btn-phase:active { background: rgba(255,255,255,0.18); }
+
+/* ── Alive counter ── */
+.alive-counter {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 10px 0; overflow: hidden;
+}
+.alive-item { display: flex; flex-direction: column; align-items: center; flex: 1; }
+.alive-num { font-size: 22px; font-weight: 900; color: #fff; line-height: 1; }
+.alive-num.mafia-col { color: #e8354a; }
+.alive-num.citizen-col { color: #4cc97a; }
+.alive-lbl { font-size: 11px; color: #777; margin-top: 2px; font-weight: 600; }
+.alive-sep { width: 1px; height: 36px; background: rgba(255,255,255,0.08); }
+
+/* ── Win banner ── */
+.win-banner { margin-bottom: 1rem; }
+.win-content {
+  border-radius: 14px; padding: 18px; text-align: center;
+  font-size: 22px; font-weight: 900; animation: bounce 0.5s ease both;
+}
+.mafia-win   { background: rgba(232,53,74,0.18); border: 2px solid rgba(232,53,74,0.4); color: #ff8096; }
+.citizen-win { background: rgba(40,180,80,0.14); border: 2px solid rgba(40,180,80,0.3); color: #5de08a; }
+
+/* ── Speak timer card ── */
+.speak-card { margin-bottom: 1rem; }
+.speak-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.speak-name-wrap { flex: 1; }
+.speak-name-label { font-size: 11px; color: #888; font-weight: 700; margin-bottom: 3px; }
+.speak-name { font-size: 18px; font-weight: 900; color: #fff; word-break: break-word; }
+.speak-timer-big {
+  font-size: clamp(40px, 12vw, 52px); font-weight: 900; color: #e8354a;
+  min-width: 72px; text-align: center; font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 20px rgba(232,53,74,0.3);
+}
+.speak-presets {
+  display: flex; gap: 8px; margin-bottom: 12px;
+}
+.speak-preset {
+  padding: 5px 14px; border-radius: 20px;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+  font-size: 12px; font-weight: 700; color: #bbb;
+  font-family: 'Tajawal', Arial, sans-serif;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.speak-preset.active {
+  background: rgba(232,53,74,0.2); border-color: rgba(232,53,74,0.45); color: #e8354a;
+}
+
+/* ── Vote panel ── */
+.section-title { font-size: 13px; font-weight: 800; color: #ccc; }
+.vote-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.vote-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; border-radius: 11px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  transition: background 0.2s, border-color 0.2s;
+}
+.vote-row.vote-leader {
+  background: rgba(232,53,74,0.12); border-color: rgba(232,53,74,0.3);
+}
+.vote-name { font-size: 14px; font-weight: 700; color: #eee; }
+.vote-controls { display: flex; align-items: center; gap: 12px; }
+.vote-controls button {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  font-size: 18px; font-weight: 700; color: #ddd;
+  display: flex; align-items: center; justify-content: center; padding: 0;
+}
+.vote-controls button:active { background: rgba(255,255,255,0.2); }
+.vote-count { font-size: 17px; font-weight: 900; color: #e8354a; min-width: 22px; text-align: center; }
+.vote-result {
+  font-size: 14px; font-weight: 700; color: #fff;
+  padding: 8px 0; min-height: 24px; text-align: center;
+  line-height: 1.6;
+}
+.vote-result b { color: #e8354a; }
+.btn-declare {
+  padding: 7px 14px; border-radius: 20px;
+  background: rgba(232,53,74,0.15); border: 1px solid rgba(232,53,74,0.35);
+  color: #e8354a; font-size: 13px; font-weight: 700;
+  font-family: 'Tajawal', Arial, sans-serif;
+}
+.btn-reset-vote {
+  width: 100%; padding: 9px; border-radius: 10px; margin-top: 6px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  color: #888; font-size: 13px; font-weight: 600;
+  font-family: 'Tajawal', Arial, sans-serif;
+}
