@@ -13,7 +13,7 @@
 <div class="bg-texture"></div>
 <div class="container">
 
-  <!-- Screen 1: Count -->
+  <!-- ══ Screen 1: Count ══ -->
   <div id="screen-count" class="screen active">
     <div class="top-bar">
       <div class="logo">🎭 <span>المافيا</span></div>
@@ -28,21 +28,21 @@
       </div>
       <div class="players-preview" id="players-preview"></div>
     </div>
+    <!-- Stats -->
+    <div id="stats-display" class="stats-bar" style="display:none;"></div>
     <button class="btn-main" onclick="goToNames()">
       <span>التالي</span><span class="btn-arrow">←</span>
     </button>
   </div>
 
-  <!-- Screen 2: Names -->
+  <!-- ══ Screen 2: Names ══ -->
   <div id="screen-names" class="screen">
     <div class="top-bar">
       <button class="btn-back" onclick="backToCount()">→ رجوع</button>
       <h2>أسماء اللاعبين</h2>
       <div style="width:60px"></div>
     </div>
-    <div id="auto-loaded-notice" class="notice notice-green" style="display:none;">
-      ✓ تم تحميل الأسماء المحفوظة
-    </div>
+    <div id="auto-loaded-notice" class="notice notice-green" style="display:none;">✓ تم تحميل الأسماء المحفوظة</div>
     <div id="saved-names-banner" class="saved-banner" style="display:none;">
       <div class="saved-banner-label">اللاعبين اللي لعبوا آخر مرة:</div>
       <div id="saved-names-preview" class="saved-banner-names"></div>
@@ -52,12 +52,10 @@
       <div class="card-hint">اكتب اسم كل لاعب</div>
       <div class="names-grid" id="names-grid"></div>
     </div>
-    <button class="btn-main" onclick="goToRoles()">
-      <span>التالي</span><span class="btn-arrow">←</span>
-    </button>
+    <button class="btn-main" onclick="goToRoles()"><span>التالي</span><span class="btn-arrow">←</span></button>
   </div>
 
-  <!-- Screen 3: Roles -->
+  <!-- ══ Screen 3: Roles ══ -->
   <div id="screen-roles" class="screen">
     <div class="top-bar">
       <button class="btn-back" onclick="showScreen('screen-names')">→ رجوع</button>
@@ -105,14 +103,11 @@
       </div>
       <div class="warn" id="warn-msg"></div>
     </div>
-    <button class="btn-main" onclick="startGame()">
-      <span>ابدأ اللعبة</span><span class="btn-arrow">←</span>
-    </button>
+    <button class="btn-main" onclick="startGame()"><span>ابدأ اللعبة</span><span class="btn-arrow">←</span></button>
   </div>
 
-  <!-- Screen 4: Reveal -->
+  <!-- ══ Screen 4: Reveal ══ -->
   <div id="screen-reveal" class="screen">
-    <!-- Cover: shown first, button is NOT btn-main to avoid full-width -->
     <div class="cover-view" id="cover-view">
       <div class="cover-icon">🤫</div>
       <p class="cover-label">اللاعب التالي</p>
@@ -120,11 +115,8 @@
       <p class="cover-hint">مش حد غيره يبص على الشاشة!</p>
       <button class="btn-reveal" onclick="showRole()">اضغط لتشوف دورك</button>
     </div>
-    <!-- Role view -->
     <div id="role-view" style="display:none;" class="role-reveal-view">
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="progress-bar-fill"></div>
-      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
       <div class="progress-text" id="progress-text"></div>
       <div class="player-reveal">
         <div class="role-badge" id="role-emoji"></div>
@@ -136,14 +128,27 @@
     </div>
   </div>
 
-  <!-- Screen 5: Done -->
+  <!-- ══ Screen 5: Done ══ -->
   <div id="screen-done" class="screen">
     <div class="done-screen">
       <div class="done-emoji">🎉</div>
       <h2>كل اللاعبين شافوا أدوارهم!</h2>
       <p>اللعبة جاهزة — يمكنكم تبدأوا</p>
 
-      <!-- Timer -->
+      <!-- Win banner -->
+      <div id="win-banner" style="display:none;" class="win-banner"></div>
+
+      <!-- Phase toggle -->
+      <div class="card phase-card day" id="phase-card">
+        <div class="phase-row">
+          <div id="phase-label" class="phase-label">☀️ النهار</div>
+          <button id="phase-btn" onclick="togglePhase()" class="btn-phase">🌙 تحويل الليل</button>
+        </div>
+        <!-- Alive counter (host only) -->
+        <div id="alive-counter" class="alive-counter"></div>
+      </div>
+
+      <!-- Discussion Timer -->
       <div class="card timer-card">
         <div class="timer-label">⏱ تايمر النقاش</div>
         <div class="timer-display" id="timer-display">03:00</div>
@@ -159,15 +164,45 @@
         </div>
       </div>
 
+      <!-- Speak timer -->
+      <div class="card speak-card">
+        <div class="timer-label">🎙 تايمر الكلام</div>
+        <div class="speak-row">
+          <div class="speak-name-wrap">
+            <div class="speak-name-label">دور:</div>
+            <div class="speak-name" id="speak-name">—</div>
+          </div>
+          <div class="speak-timer-big" id="speak-timer-display">30</div>
+        </div>
+        <div class="speak-presets">
+          <button onclick="setSpeakTime(15)" class="speak-preset" data-secs="15">15ث</button>
+          <button onclick="setSpeakTime(30)" class="speak-preset active" data-secs="30">30ث</button>
+          <button onclick="setSpeakTime(60)" class="speak-preset" data-secs="60">60ث</button>
+        </div>
+        <div class="timer-controls">
+          <button onclick="startSpeakTimer()" id="speak-start-btn" class="btn-timer-start">▶</button>
+          <button onclick="nextSpeaker()" class="btn-timer-reset">التالي ←</button>
+        </div>
+      </div>
+
+      <!-- Vote panel -->
+      <div class="card">
+        <div class="round-header">
+          <span class="section-title">🗳 التصويت</span>
+          <button onclick="declareExpelled()" class="btn-declare">إعلان الطرد</button>
+        </div>
+        <div id="vote-players" class="vote-list"></div>
+        <div id="vote-result" class="vote-result"></div>
+        <button onclick="renderVotePanel()" class="btn-reset-vote">↺ إعادة التصويت</button>
+      </div>
+
       <!-- Round log -->
       <div class="card" style="text-align:right;">
         <div class="round-header">
-          <span class="card-hint" style="margin:0;">📋 سجل الجولات</span>
+          <span class="section-title">📋 سجل الجولات</span>
           <button onclick="addRoundLog()" class="btn-add-round">+ أضف جولة</button>
         </div>
-        <div id="round-log" class="round-log">
-          <div class="round-empty">لا يوجد جولات بعد</div>
-        </div>
+        <div id="round-log" class="round-log"><div class="round-empty">لا يوجد جولات بعد</div></div>
       </div>
 
       <!-- Host -->
@@ -183,7 +218,7 @@
     </div>
   </div>
 
-</div><!-- /container -->
+</div>
 
 <!-- Help overlay -->
 <div id="help-overlay" class="overlay" style="display:none;">
@@ -228,7 +263,7 @@
             <div>٢. "المافيا تصحى وتختار مين تقتله"</div>
             <div>٣. "المافيا تنام" ← "الطبيب يصحى ويختار مين ينقذه"</div>
             <div>٤. "الطبيب ينام" ← "المحقق يصحى ويختار لاعب"</div>
-            <div>٥. يشاور برأسه: ✅ صح أو ❌ غلط</div>
+            <div>٥. يشاور برأسه ✅ صح أو ❌ غلط</div>
             <div>٦. "الكل يصحى"</div>
           </div>
         </div>
@@ -256,20 +291,15 @@
     </div>
     <div style="margin-bottom:1rem;">
       <label class="field-label">رقم الليلة</label>
-      <!-- FIX: class unified to round-night-select (was round-night-select in HTML, round-night-display in CSS) -->
       <div class="round-night-select" id="round-night-display">ليلة 1</div>
     </div>
     <div style="margin-bottom:1rem;">
       <label class="field-label">اللي اتقتل</label>
-      <select id="round-killed" class="field-select">
-        <option value="">محدش مات (الطبيب أنقذه)</option>
-      </select>
+      <select id="round-killed" class="field-select"><option value="">محدش مات (الطبيب أنقذه)</option></select>
     </div>
     <div style="margin-bottom:1rem;">
       <label class="field-label">اللي اتطرد</label>
-      <select id="round-expelled" class="field-select">
-        <option value="">محدش اتطرد</option>
-      </select>
+      <select id="round-expelled" class="field-select"><option value="">محدش اتطرد</option></select>
     </div>
     <button class="btn-main" onclick="saveRound()">حفظ الجولة</button>
   </div>
@@ -278,7 +308,7 @@
 <!-- Confirm overlay -->
 <div id="confirm-overlay" class="overlay" style="display:none;">
   <div class="overlay-box" style="text-align:center;">
-    <div style="font-size:40px; margin-bottom:0.8rem;">🎮</div>
+    <div style="font-size:40px;margin-bottom:0.8rem;">🎮</div>
     <div class="overlay-title" style="margin-bottom:0.6rem;">تأكيد بدء اللعبة</div>
     <div id="confirm-summary" class="confirm-summary"></div>
     <button class="btn-main" onclick="confirmStart()" style="margin-bottom:0.6rem;">ابدأ التوزيع ✓</button>
