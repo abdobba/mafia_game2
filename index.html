@@ -4,87 +4,133 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>لعبة المافيا</title>
-<!-- ✅ FIX 1: مسار الـ CSS صح (نفس الفولدر) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="bg-texture"></div>
 <div class="container">
 
   <!-- Screen 1: Count -->
   <div id="screen-count" class="screen active">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-      <h2 style="margin-bottom:0;">كام لاعب هيلعبوا؟</h2>
-      <button onclick="toggleHelp()" style="width:36px;height:36px;border-radius:50%;padding:0;font-size:17px;font-weight:700;border:2px solid #bbb;background:#fff;color:#555;flex-shrink:0;">؟</button>
+    <div class="top-bar">
+      <div class="logo">🎭 <span>المافيا</span></div>
+      <button onclick="toggleHelp()" class="icon-btn">؟</button>
     </div>
-    <div class="card" style="text-align:center; padding: 1.5rem;">
+    <div class="hero-card">
+      <p class="hero-label">كام لاعب هيلعبوا؟</p>
       <div class="num-controls">
-        <button onclick="changeCount(-1)">−</button>
+        <button onclick="changeCount(-1)" class="circle-btn">−</button>
         <div class="num-big" id="player-count">6</div>
-        <button onclick="changeCount(1)">+</button>
+        <button onclick="changeCount(1)" class="circle-btn">+</button>
       </div>
-      <button class="btn-main" onclick="goToNames()">التالي ←</button>
+      <div class="players-preview" id="players-preview"></div>
     </div>
+    <button class="btn-main" onclick="goToNames()">
+      <span>التالي</span><span class="btn-arrow">←</span>
+    </button>
   </div>
 
   <!-- Screen 2: Names -->
   <div id="screen-names" class="screen">
-    <div class="screen-header">
-      <!-- ✅ FIX 2: زر الرجوع بيستخدم backToCount() بدل initCountScreen() -->
+    <div class="top-bar">
       <button class="btn-back" onclick="backToCount()">→ رجوع</button>
       <h2>أسماء اللاعبين</h2>
+      <div style="width:60px"></div>
     </div>
-    <div id="auto-loaded-notice" style="display:none; font-size:12px; color:#2a7a2a; background:#f0fff0; border:1px solid #b8e6b8; border-radius:8px; padding:7px 12px; margin-bottom:0.8rem;">✓ تم تحميل الأسماء المحفوظة</div>
-    <div id="saved-names-banner" class="card" style="display:none; background:#f0f7ff; border-color:#c0d8f0; padding: 0.9rem 1.2rem; margin-bottom: 0.8rem;">
-      <div style="font-size:12px;color:#666;margin-bottom:6px;">اللاعبين اللي لعبوا آخر مرة:</div>
-      <div id="saved-names-preview" style="font-size:13px;font-weight:600;color:#222;margin-bottom:10px;line-height:1.6;"></div>
-      <button onclick="loadSavedNames()" style="width:100%;background:#1a6fc4;color:#fff;border-color:#1a6fc4;border-radius:10px;padding:10px;font-size:14px;">✓ استخدم نفس اللاعبين</button>
+    <div id="auto-loaded-notice" class="notice notice-green" style="display:none;">
+      ✓ تم تحميل الأسماء المحفوظة
+    </div>
+    <div id="saved-names-banner" class="saved-banner" style="display:none;">
+      <div class="saved-banner-label">اللاعبين اللي لعبوا آخر مرة:</div>
+      <div id="saved-names-preview" class="saved-banner-names"></div>
+      <button onclick="loadSavedNames()" class="btn-secondary">✓ استخدم نفس اللاعبين</button>
     </div>
     <div class="card">
-      <div style="font-size:13px;color:#888;margin-bottom:10px;">اكتب اسم كل لاعب</div>
+      <div class="card-hint">اكتب اسم كل لاعب</div>
       <div class="names-grid" id="names-grid"></div>
     </div>
-    <button class="btn-main" onclick="goToRoles()">التالي ←</button>
+    <button class="btn-main" onclick="goToRoles()">
+      <span>التالي</span><span class="btn-arrow">←</span>
+    </button>
   </div>
 
   <!-- Screen 3: Roles -->
   <div id="screen-roles" class="screen">
-    <div class="screen-header">
+    <div class="top-bar">
       <button class="btn-back" onclick="showScreen('screen-names')">→ رجوع</button>
       <h2>توزيع الأدوار</h2>
+      <div style="width:60px"></div>
     </div>
     <div class="card">
       <div class="role-row">
-        <div><div class="role-name">المافيا</div><div class="role-desc">تقتل كل ليلة</div></div>
-        <div class="counter"><button onclick="change('mafia',-1)">−</button><span id="cnt-mafia">1</span><button onclick="change('mafia',1)">+</button></div>
+        <div class="role-info-col">
+          <div class="role-emoji-sm">🔫</div>
+          <div><div class="role-name">المافيا</div><div class="role-desc">تقتل كل ليلة</div></div>
+        </div>
+        <div class="counter">
+          <button onclick="change('mafia',-1)">−</button>
+          <span id="cnt-mafia">1</span>
+          <button onclick="change('mafia',1)">+</button>
+        </div>
       </div>
       <div class="role-row">
-        <div><div class="role-name">المحقق</div><div class="role-desc">يكشف هوية لاعب كل ليلة</div></div>
-        <div class="counter"><button onclick="change('detective',-1)">−</button><span id="cnt-detective">1</span><button onclick="change('detective',1)">+</button></div>
+        <div class="role-info-col">
+          <div class="role-emoji-sm">🔍</div>
+          <div><div class="role-name">المحقق</div><div class="role-desc">يكشف هوية لاعب كل ليلة</div></div>
+        </div>
+        <div class="counter">
+          <button onclick="change('detective',-1)">−</button>
+          <span id="cnt-detective">1</span>
+          <button onclick="change('detective',1)">+</button>
+        </div>
       </div>
       <div class="role-row">
-        <div><div class="role-name">الطبيب</div><div class="role-desc">ينقذ لاعب من القتل</div></div>
-        <div class="counter"><button onclick="change('doctor',-1)">−</button><span id="cnt-doctor">1</span><button onclick="change('doctor',1)">+</button></div>
+        <div class="role-info-col">
+          <div class="role-emoji-sm">💊</div>
+          <div><div class="role-name">الطبيب</div><div class="role-desc">ينقذ لاعب من القتل</div></div>
+        </div>
+        <div class="counter">
+          <button onclick="change('doctor',-1)">−</button>
+          <span id="cnt-doctor">1</span>
+          <button onclick="change('doctor',1)">+</button>
+        </div>
       </div>
-      <div style="margin-top:12px;font-size:13px;color:#888;">مواطنون عاديون: <span id="citizens-count" style="font-weight:700;">—</span></div>
+      <div class="citizens-row">
+        <span class="role-emoji-sm">👤</span>
+        <span>مواطنون عاديون:</span>
+        <span id="citizens-count" class="citizens-num">—</span>
+      </div>
       <div class="warn" id="warn-msg"></div>
     </div>
-    <button class="btn-main" onclick="startGame()">ابدأ اللعبة ←</button>
+    <button class="btn-main" onclick="startGame()">
+      <span>ابدأ اللعبة</span><span class="btn-arrow">←</span>
+    </button>
   </div>
 
   <!-- Screen 4: Reveal -->
   <div id="screen-reveal" class="screen">
-    <div class="cover" id="cover-view">
-      <p>اللاعب التالي</p>
-      <div class="name" id="next-player-name"></div>
-      <button class="btn-main" onclick="showRole()">اضغط لتشوف دورك</button>
+    <!-- Cover: shown first, button is NOT btn-main to avoid full-width -->
+    <div class="cover-view" id="cover-view">
+      <div class="cover-icon">🤫</div>
+      <p class="cover-label">اللاعب التالي</p>
+      <div class="cover-name" id="next-player-name"></div>
+      <p class="cover-hint">مش حد غيره يبص على الشاشة!</p>
+      <button class="btn-reveal" onclick="showRole()">اضغط لتشوف دورك</button>
     </div>
-    <div id="role-view" style="display:none;">
-      <div class="progress" id="progress-text"></div>
+    <!-- Role view -->
+    <div id="role-view" style="display:none;" class="role-reveal-view">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+      </div>
+      <div class="progress-text" id="progress-text"></div>
       <div class="player-reveal">
         <div class="role-badge" id="role-emoji"></div>
-        <div class="player-name-big" id="reveal-player-name"></div>
-        <div class="role-title" id="reveal-role-title"></div>
-        <div class="role-info" id="reveal-role-info"></div>
+        <div class="reveal-player-name" id="reveal-player-name"></div>
+        <div class="reveal-role-title" id="reveal-role-title"></div>
+        <div class="role-info-box" id="reveal-role-info"></div>
         <button class="btn-main" onclick="nextPlayer()">فهمت — خليني أغطي الشاشة</button>
       </div>
     </div>
@@ -93,107 +139,154 @@
   <!-- Screen 5: Done -->
   <div id="screen-done" class="screen">
     <div class="done-screen">
-      <div style="font-size:60px;margin-bottom:1rem;">🎉</div>
+      <div class="done-emoji">🎉</div>
       <h2>كل اللاعبين شافوا أدوارهم!</h2>
-      <p style="margin-top:8px; margin-bottom:1.2rem;">اللعبة جاهزة — يمكنكم تبدأوا</p>
+      <p>اللعبة جاهزة — يمكنكم تبدأوا</p>
 
-      <!-- Host view toggle -->
-      <button id="host-btn" onclick="toggleHostView()" style="width:100%;padding:12px;border-radius:10px;font-size:15px;margin-bottom:0.8rem;background:#f5f5f5;border-color:#ddd;">👁 وضع المضيف</button>
+      <!-- Timer -->
+      <div class="card timer-card">
+        <div class="timer-label">⏱ تايمر النقاش</div>
+        <div class="timer-display" id="timer-display">03:00</div>
+        <div class="timer-presets">
+          <button onclick="setTimer(60)"  class="preset-btn" data-secs="60">1د</button>
+          <button onclick="setTimer(120)" class="preset-btn" data-secs="120">2د</button>
+          <button onclick="setTimer(180)" class="preset-btn active" data-secs="180">3د</button>
+          <button onclick="setTimer(300)" class="preset-btn" data-secs="300">5د</button>
+        </div>
+        <div class="timer-controls">
+          <button onclick="startTimer()" id="timer-start-btn" class="btn-timer-start">▶ ابدأ</button>
+          <button onclick="resetTimer()" class="btn-timer-reset">↺ إعادة</button>
+        </div>
+      </div>
+
+      <!-- Round log -->
+      <div class="card" style="text-align:right;">
+        <div class="round-header">
+          <span class="card-hint" style="margin:0;">📋 سجل الجولات</span>
+          <button onclick="addRoundLog()" class="btn-add-round">+ أضف جولة</button>
+        </div>
+        <div id="round-log" class="round-log">
+          <div class="round-empty">لا يوجد جولات بعد</div>
+        </div>
+      </div>
+
+      <!-- Host -->
+      <button id="host-btn" onclick="toggleHostView()" class="btn-host">👁 وضع المضيف</button>
       <div id="host-panel" style="display:none;">
         <div class="card" style="text-align:right; margin-bottom:0.8rem;">
-          <div style="font-size:12px;color:#888;margin-bottom:10px;">للمضيف فقط — لا تعرضه للاعبين</div>
+          <div class="card-hint">للمضيف فقط — لا تعرضه للاعبين</div>
           <div id="host-summary"></div>
         </div>
       </div>
 
-      <button class="btn-main" onclick="resetGame()">لعبة جديدة</button>
+      <button class="btn-main" onclick="resetGame()" style="margin-top:0.5rem;">🔄 لعبة جديدة</button>
     </div>
   </div>
 
-</div>
+</div><!-- /container -->
 
 <!-- Help overlay -->
-<div id="help-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:200; align-items:flex-start; justify-content:center; padding:1.2rem; overflow-y:auto;">
-  <div style="background:#fff; border-radius:18px; padding:1.5rem; width:100%; max-width:440px; margin:auto; position:relative;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem;">
-      <div style="font-size:20px; font-weight:700;">🎭 كيف تلعب المافيا؟</div>
-      <button onclick="toggleHelp()" style="width:34px;height:34px;border-radius:50%;padding:0;font-size:18px;border-color:#ddd;background:#f5f5f5;">✕</button>
+<div id="help-overlay" class="overlay" style="display:none;">
+  <div class="overlay-box help-box">
+    <div class="overlay-header">
+      <div class="overlay-title">🎭 كيف تلعب المافيا؟</div>
+      <button onclick="toggleHelp()" class="icon-btn">✕</button>
     </div>
-
-    <div style="font-size:13px; line-height:2; color:#333;">
-
-      <div style="font-weight:700; font-size:14px; margin-bottom:4px;">👥 الفكرة الأساسية</div>
-      <p style="margin-bottom:1rem;">في اللعبة فريقين: <b>المافيا</b> اللي بتحاول تقتل الكل، و<b>المواطنين</b> اللي بيحاولوا يكشفوا المافيا ويطردوهم.</p>
-
-      <div style="font-weight:700; font-size:14px; margin-bottom:4px;">🌙 الليل</div>
-      <p style="margin-bottom:1rem;">الكل يغمض عينيه. المافيا تصحى بهدوء وتتفق على مين تقتله. الطبيب يصحى ويختار مين ينقذه. المحقق يصحى ويختار لاعب يعرف دوره.</p>
-
-      <div style="font-weight:700; font-size:14px; margin-bottom:4px;">☀️ النهار</div>
-      <p style="margin-bottom:1rem;">المضيف يعلن اللي اتقتل (لو مفيش طبيب أنقذه). الكل يتكلم ويتجادل ويحاول يعرف مين المافيا. في الآخر يصوتوا على طرد لاعب — الأغلبية تقرر.</p>
-
-      <div style="font-weight:700; font-size:14px; margin-bottom:4px;">🏆 الفوز</div>
-      <p style="margin-bottom:1rem;">
-        🔫 <b>المافيا تكسب</b> لما عددها يساوي أو يزيد عن المواطنين.<br>
-        👥 <b>المواطنون يكسبوا</b> لما يطردوا كل أفراد المافيا.
-      </p>
-
-      <div style="background:#f9f9f9; border-radius:10px; padding:0.8rem 1rem; margin-top:0.5rem;">
-        <div style="font-weight:700; font-size:13px; margin-bottom:6px;">الأدوار</div>
-        <div style="margin-bottom:4px;">🔫 <b>المافيا</b> — تقتل لاعب كل ليلة</div>
-        <div style="margin-bottom:4px;">🔍 <b>المحقق</b> — يعرف دور أي لاعب كل ليلة</div>
-        <div style="margin-bottom:4px;">💊 <b>الطبيب</b> — ينقذ لاعب من القتل كل ليلة</div>
-        <div>👤 <b>المواطن</b> — يشارك في النقاش والتصويت</div>
+    <div class="help-content">
+      <div class="help-section">
+        <div class="help-section-title">👥 الفكرة الأساسية</div>
+        <p>في اللعبة فريقين: <b>المافيا</b> اللي بتحاول تقتل الكل، و<b>المواطنين</b> اللي بيحاولوا يكشفوا المافيا ويطردوهم.</p>
       </div>
-
-      <div style="margin-top:1.2rem; border-top:1px solid #eee; padding-top:1rem;">
-        <div style="font-weight:700; font-size:14px; margin-bottom:8px;">🎙️ دور المنظم (المضيف)</div>
-        <p style="margin-bottom:0.8rem;">المنظم <b>مش لاعب</b> — هو اللي بيدير اللعبة ويعرف كل الأدوار من البداية عن طريق زرار <b>"وضع المضيف"</b> في آخر شاشة.</p>
-
-        <div style="background:#fff; border:1px solid #e8e8e8; border-radius:8px; padding:0.8rem; margin-bottom:0.6rem;">
-          <div style="font-weight:700; font-size:12px; color:#555; margin-bottom:6px;">🌙 في الليل يقول:</div>
-          <div style="font-size:12px; color:#333; line-height:1.9;">
-            ١. "الكل يغمض عينه"<br>
-            ٢. "المافيا تصحى وتختار مين تقتله" — المافيا تشاور بصمت<br>
-            ٣. "المافيا تنام" — "الطبيب يصحى ويختار مين ينقذه"<br>
-            ٤. "الطبيب ينام" — "المحقق يصحى ويختار لاعب"<br>
-            ٥. المنظم يشاور برأسه: ✅ لو المحقق صح أو ❌ لو غلط<br>
-            ٦. "المحقق ينام" — "الكل يصحى"
+      <div class="help-section">
+        <div class="help-section-title">🌙 الليل</div>
+        <p>الكل يغمض عينيه. المافيا تصحى وتتفق على مين تقتله. الطبيب يصحى ويختار مين ينقذه. المحقق يصحى ويختار لاعب يعرف دوره.</p>
+      </div>
+      <div class="help-section">
+        <div class="help-section-title">☀️ النهار</div>
+        <p>المضيف يعلن اللي اتقتل. الكل يتكلم ويتجادل. في الآخر يصوتوا على طرد لاعب.</p>
+      </div>
+      <div class="help-section">
+        <div class="help-section-title">🏆 الفوز</div>
+        <p>🔫 <b>المافيا تكسب</b> لما عددها يساوي أو يزيد عن المواطنين.<br>👥 <b>المواطنون يكسبوا</b> لما يطردوا كل المافيا.</p>
+      </div>
+      <div class="roles-summary">
+        <div class="roles-summary-title">الأدوار</div>
+        <div class="roles-grid">
+          <div class="role-chip">🔫 <b>المافيا</b> — تقتل كل ليلة</div>
+          <div class="role-chip">🔍 <b>المحقق</b> — يكشف هوية لاعب</div>
+          <div class="role-chip">💊 <b>الطبيب</b> — ينقذ لاعب من القتل</div>
+          <div class="role-chip">👤 <b>المواطن</b> — يشارك في التصويت</div>
+        </div>
+      </div>
+      <div class="help-section">
+        <div class="help-section-title">🎙️ دور المضيف</div>
+        <p>المنظم <b>مش لاعب</b> — هو اللي بيدير اللعبة ويعرف كل الأدوار من البداية.</p>
+        <div class="host-script">
+          <div class="script-title">🌙 في الليل يقول:</div>
+          <div class="script-steps">
+            <div>١. "الكل يغمض عينه"</div>
+            <div>٢. "المافيا تصحى وتختار مين تقتله"</div>
+            <div>٣. "المافيا تنام" ← "الطبيب يصحى ويختار مين ينقذه"</div>
+            <div>٤. "الطبيب ينام" ← "المحقق يصحى ويختار لاعب"</div>
+            <div>٥. يشاور برأسه: ✅ صح أو ❌ غلط</div>
+            <div>٦. "الكل يصحى"</div>
           </div>
         </div>
-
-        <div style="background:#fff; border:1px solid #e8e8e8; border-radius:8px; padding:0.8rem;">
-          <div style="font-weight:700; font-size:12px; color:#555; margin-bottom:6px;">☀️ في النهار يقول:</div>
-          <div style="font-size:12px; color:#333; line-height:1.9;">
-            ١. يعلن اسم اللي اتقتل (أو "محدش مات الليلة" لو الطبيب أنقذه)<br>
-            ٢. يدير النقاش ويديهم وقت يتكلموا<br>
-            ٣. يعمل تصويت — الأغلبية تقرر مين يتطرد<br>
-            ٤. يعلن دور اللي اتطرد بعد الطرد
+        <div class="host-script">
+          <div class="script-title">☀️ في النهار يقول:</div>
+          <div class="script-steps">
+            <div>١. يعلن اسم اللي اتقتل (أو "محدش مات" لو الطبيب أنقذه)</div>
+            <div>٢. يدير النقاش ويديهم وقت يتكلموا</div>
+            <div>٣. يعمل تصويت — الأغلبية تقرر</div>
+            <div>٤. يعلن دور اللي اتطرد</div>
           </div>
         </div>
       </div>
-
     </div>
-
-    <button onclick="toggleHelp()" class="btn-main" style="margin-top:1.2rem;">فهمت! نلعب 🎮</button>
+    <button onclick="toggleHelp()" class="btn-main" style="margin-top:1rem;">فهمت! نلعب 🎮</button>
   </div>
 </div>
 
-<!-- ✅ FIX 5: z-index الـ sound button أعلى من الـ confirm overlay -->
-<button id="sound-btn" onclick="toggleSound()" style="position:fixed;bottom:1.2rem;left:1.2rem;width:44px;height:44px;border-radius:50%;padding:0;font-size:20px;border:1px solid #ddd;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.12);z-index:50;">🔊</button>
+<!-- Round Log Modal -->
+<div id="round-modal" class="overlay" style="display:none;">
+  <div class="overlay-box">
+    <div class="overlay-header">
+      <div class="overlay-title">📋 إضافة جولة</div>
+      <button onclick="closeRoundModal()" class="icon-btn">✕</button>
+    </div>
+    <div style="margin-bottom:1rem;">
+      <label class="field-label">رقم الليلة</label>
+      <!-- FIX: class unified to round-night-select (was round-night-select in HTML, round-night-display in CSS) -->
+      <div class="round-night-select" id="round-night-display">ليلة 1</div>
+    </div>
+    <div style="margin-bottom:1rem;">
+      <label class="field-label">اللي اتقتل</label>
+      <select id="round-killed" class="field-select">
+        <option value="">محدش مات (الطبيب أنقذه)</option>
+      </select>
+    </div>
+    <div style="margin-bottom:1rem;">
+      <label class="field-label">اللي اتطرد</label>
+      <select id="round-expelled" class="field-select">
+        <option value="">محدش اتطرد</option>
+      </select>
+    </div>
+    <button class="btn-main" onclick="saveRound()">حفظ الجولة</button>
+  </div>
+</div>
 
 <!-- Confirm overlay -->
-<!-- ✅ FIX 5: z-index الـ confirm overlay أعلى من الـ sound button -->
-<div id="confirm-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:150; align-items:center; justify-content:center; padding:1.5rem;">
-  <div style="background:#fff; border-radius:16px; padding:1.5rem; width:100%; max-width:360px; text-align:center;">
-    <div style="font-size:32px; margin-bottom:0.8rem;">🎮</div>
-    <div style="font-size:16px; font-weight:700; margin-bottom:0.6rem;">تأكيد بدء اللعبة</div>
-    <div id="confirm-summary" style="font-size:13px; color:#555; margin-bottom:1.2rem; line-height:2;"></div>
+<div id="confirm-overlay" class="overlay" style="display:none;">
+  <div class="overlay-box" style="text-align:center;">
+    <div style="font-size:40px; margin-bottom:0.8rem;">🎮</div>
+    <div class="overlay-title" style="margin-bottom:0.6rem;">تأكيد بدء اللعبة</div>
+    <div id="confirm-summary" class="confirm-summary"></div>
     <button class="btn-main" onclick="confirmStart()" style="margin-bottom:0.6rem;">ابدأ التوزيع ✓</button>
-    <button onclick="cancelStart()" style="width:100%; padding:11px; border-radius:10px; font-size:15px; color:#555; border-color:#ddd;">رجوع</button>
+    <button onclick="cancelStart()" class="btn-outline">رجوع</button>
   </div>
 </div>
 
-<!-- ✅ FIX 1: مسار الـ JS صح (نفس الفولدر) -->
+<button id="sound-btn" onclick="toggleSound()" class="sound-btn">🔊</button>
 <script src="app.js"></script>
 </body>
 </html>
