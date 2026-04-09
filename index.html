@@ -4,14 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>لعبة المافيا</title>
+<!-- ✅ FIX 1: مسار الـ CSS صح (نفس الفولدر) -->
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
- 
+
   <!-- Screen 1: Count -->
   <div id="screen-count" class="screen active">
-    <h2>كام لاعب هيلعبوا؟</h2>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+      <h2 style="margin-bottom:0;">كام لاعب هيلعبوا؟</h2>
+      <button onclick="toggleHelp()" style="width:36px;height:36px;border-radius:50%;padding:0;font-size:17px;font-weight:700;border:2px solid #bbb;background:#fff;color:#555;flex-shrink:0;">؟</button>
+    </div>
     <div class="card" style="text-align:center; padding: 1.5rem;">
       <div class="num-controls">
         <button onclick="changeCount(-1)">−</button>
@@ -21,10 +25,15 @@
       <button class="btn-main" onclick="goToNames()">التالي ←</button>
     </div>
   </div>
- 
+
   <!-- Screen 2: Names -->
   <div id="screen-names" class="screen">
-    <h2>أسماء اللاعبين</h2>
+    <div class="screen-header">
+      <!-- ✅ FIX 2: زر الرجوع بيستخدم backToCount() بدل initCountScreen() -->
+      <button class="btn-back" onclick="backToCount()">→ رجوع</button>
+      <h2>أسماء اللاعبين</h2>
+    </div>
+    <div id="auto-loaded-notice" style="display:none; font-size:12px; color:#2a7a2a; background:#f0fff0; border:1px solid #b8e6b8; border-radius:8px; padding:7px 12px; margin-bottom:0.8rem;">✓ تم تحميل الأسماء المحفوظة</div>
     <div id="saved-names-banner" class="card" style="display:none; background:#f0f7ff; border-color:#c0d8f0; padding: 0.9rem 1.2rem; margin-bottom: 0.8rem;">
       <div style="font-size:12px;color:#666;margin-bottom:6px;">اللاعبين اللي لعبوا آخر مرة:</div>
       <div id="saved-names-preview" style="font-size:13px;font-weight:600;color:#222;margin-bottom:10px;line-height:1.6;"></div>
@@ -36,10 +45,13 @@
     </div>
     <button class="btn-main" onclick="goToRoles()">التالي ←</button>
   </div>
- 
+
   <!-- Screen 3: Roles -->
   <div id="screen-roles" class="screen">
-    <h2>توزيع الأدوار</h2>
+    <div class="screen-header">
+      <button class="btn-back" onclick="showScreen('screen-names')">→ رجوع</button>
+      <h2>توزيع الأدوار</h2>
+    </div>
     <div class="card">
       <div class="role-row">
         <div><div class="role-name">المافيا</div><div class="role-desc">تقتل كل ليلة</div></div>
@@ -58,7 +70,7 @@
     </div>
     <button class="btn-main" onclick="startGame()">ابدأ اللعبة ←</button>
   </div>
- 
+
   <!-- Screen 4: Reveal -->
   <div id="screen-reveal" class="screen">
     <div class="cover" id="cover-view">
@@ -77,29 +89,84 @@
       </div>
     </div>
   </div>
- 
+
   <!-- Screen 5: Done -->
   <div id="screen-done" class="screen">
     <div class="done-screen">
       <div style="font-size:60px;margin-bottom:1rem;">🎉</div>
       <h2>كل اللاعبين شافوا أدوارهم!</h2>
-      <p style="margin-top:8px;">اللعبة جاهزة — يمكنكم تبدأوا</p>
-      <button class="btn-main" onclick="resetGame()" style="margin-top:1rem;">لعبة جديدة</button>
+      <p style="margin-top:8px; margin-bottom:1.2rem;">اللعبة جاهزة — يمكنكم تبدأوا</p>
+
+      <!-- Host view toggle -->
+      <button id="host-btn" onclick="toggleHostView()" style="width:100%;padding:12px;border-radius:10px;font-size:15px;margin-bottom:0.8rem;background:#f5f5f5;border-color:#ddd;">👁 وضع المضيف</button>
+      <div id="host-panel" style="display:none;">
+        <div class="card" style="text-align:right; margin-bottom:0.8rem;">
+          <div style="font-size:12px;color:#888;margin-bottom:10px;">للمضيف فقط — لا تعرضه للاعبين</div>
+          <div id="host-summary"></div>
+        </div>
+      </div>
+
+      <button class="btn-main" onclick="resetGame()">لعبة جديدة</button>
     </div>
   </div>
- 
+
 </div>
- 
+
+<!-- Help overlay -->
+<div id="help-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:200; align-items:flex-start; justify-content:center; padding:1.2rem; overflow-y:auto;">
+  <div style="background:#fff; border-radius:18px; padding:1.5rem; width:100%; max-width:440px; margin:auto; position:relative;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem;">
+      <div style="font-size:20px; font-weight:700;">🎭 كيف تلعب المافيا؟</div>
+      <button onclick="toggleHelp()" style="width:34px;height:34px;border-radius:50%;padding:0;font-size:18px;border-color:#ddd;background:#f5f5f5;">✕</button>
+    </div>
+
+    <div style="font-size:13px; line-height:2; color:#333;">
+
+      <div style="font-weight:700; font-size:14px; margin-bottom:4px;">👥 الفكرة الأساسية</div>
+      <p style="margin-bottom:1rem;">في اللعبة فريقين: <b>المافيا</b> اللي بتحاول تقتل الكل، و<b>المواطنين</b> اللي بيحاولوا يكشفوا المافيا ويطردوهم.</p>
+
+      <div style="font-weight:700; font-size:14px; margin-bottom:4px;">🌙 الليل</div>
+      <p style="margin-bottom:1rem;">الكل يغمض عينيه. المافيا تصحى بهدوء وتتفق على مين تقتله. الطبيب يصحى ويختار مين ينقذه. المحقق يصحى ويختار لاعب يعرف دوره.</p>
+
+      <div style="font-weight:700; font-size:14px; margin-bottom:4px;">☀️ النهار</div>
+      <p style="margin-bottom:1rem;">المضيف يعلن اللي اتقتل (لو مفيش طبيب أنقذه). الكل يتكلم ويتجادل ويحاول يعرف مين المافيا. في الآخر يصوتوا على طرد لاعب — الأغلبية تقرر.</p>
+
+      <div style="font-weight:700; font-size:14px; margin-bottom:4px;">🏆 الفوز</div>
+      <p style="margin-bottom:1rem;">
+        🔫 <b>المافيا تكسب</b> لما عددها يساوي أو يزيد عن المواطنين.<br>
+        👥 <b>المواطنون يكسبوا</b> لما يطردوا كل أفراد المافيا.
+      </p>
+
+      <div style="background:#f9f9f9; border-radius:10px; padding:0.8rem 1rem; margin-top:0.5rem;">
+        <div style="font-weight:700; font-size:13px; margin-bottom:6px;">الأدوار</div>
+        <div style="margin-bottom:4px;">🔫 <b>المافيا</b> — تقتل لاعب كل ليلة</div>
+        <div style="margin-bottom:4px;">🔍 <b>المحقق</b> — يعرف دور أي لاعب كل ليلة</div>
+        <div style="margin-bottom:4px;">💊 <b>الطبيب</b> — ينقذ لاعب من القتل كل ليلة</div>
+        <div>👤 <b>المواطن</b> — يشارك في النقاش والتصويت</div>
+      </div>
+
+    </div>
+
+    <button onclick="toggleHelp()" class="btn-main" style="margin-top:1.2rem;">فهمت! نلعب 🎮</button>
+  </div>
+</div>
+
+<!-- ✅ FIX 5: z-index الـ sound button أعلى من الـ confirm overlay -->
+<button id="sound-btn" onclick="toggleSound()" style="position:fixed;bottom:1.2rem;left:1.2rem;width:44px;height:44px;border-radius:50%;padding:0;font-size:20px;border:1px solid #ddd;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.12);z-index:50;">🔊</button>
+
 <!-- Confirm overlay -->
-<div id="confirm-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center; padding:1.5rem;">
+<!-- ✅ FIX 5: z-index الـ confirm overlay أعلى من الـ sound button -->
+<div id="confirm-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:150; align-items:center; justify-content:center; padding:1.5rem;">
   <div style="background:#fff; border-radius:16px; padding:1.5rem; width:100%; max-width:360px; text-align:center;">
     <div style="font-size:32px; margin-bottom:0.8rem;">🎮</div>
     <div style="font-size:16px; font-weight:700; margin-bottom:0.6rem;">تأكيد بدء اللعبة</div>
-    <div id="confirm-summary" style="font-size:13px; color:#666; margin-bottom:1.2rem; line-height:1.8;"></div>
+    <div id="confirm-summary" style="font-size:13px; color:#555; margin-bottom:1.2rem; line-height:2;"></div>
     <button class="btn-main" onclick="confirmStart()" style="margin-bottom:0.6rem;">ابدأ التوزيع ✓</button>
-    <button onclick="cancelStart()" style="width:100%; padding:11px; border-radius:10px; font-size:15px; color:#555;">رجوع</button>
+    <button onclick="cancelStart()" style="width:100%; padding:11px; border-radius:10px; font-size:15px; color:#555; border-color:#ddd;">رجوع</button>
   </div>
 </div>
+
+<!-- ✅ FIX 1: مسار الـ JS صح (نفس الفولدر) -->
 <script src="app.js"></script>
 </body>
 </html>
