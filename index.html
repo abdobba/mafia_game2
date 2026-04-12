@@ -10,10 +10,94 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- ══════════════════════════════════════
+     CONSENT SCREEN — shown on first visit
+══════════════════════════════════════ -->
+<div id="consent-overlay" class="consent-overlay">
+  <div class="consent-box">
+
+    <div class="consent-logo">🎭</div>
+    <div class="consent-game-title">لعبة المافيا</div>
+    <div class="consent-author">تطوير: Abdulrahman Rabie Barakat</div>
+
+    <div class="consent-divider"></div>
+
+    <div class="consent-terms-title">📋 اتفاقية الاستخدام</div>
+    <div class="consent-terms-scroll">
+      <p class="consent-terms-intro">
+        يُرجى قراءة هذه الشروط بعناية قبل استخدام التطبيق. باستخدامك لهذا التطبيق، فإنك توافق على الالتزام بجميع البنود الواردة أدناه.
+      </p>
+
+      <div class="consent-term">
+        <span class="consent-term-num">١</span>
+        <div>
+          <b>حقوق الملكية الفكرية</b><br>
+          جميع حقوق الملكية الفكرية لهذا التطبيق، بما يشمل التصميم والكود البرمجي والمحتوى، محفوظة حصرياً لـ <b>Abdulrahman Rabie Barakat</b> © 2025. لا يجوز نسخ أو تعديل أو توزيع أي جزء من هذا التطبيق دون الحصول على إذن كتابي مسبق.
+        </div>
+      </div>
+
+      <div class="consent-term">
+        <span class="consent-term-num">٢</span>
+        <div>
+          <b>الغرض من الاستخدام</b><br>
+          هذا التطبيق مخصص للاستخدام الترفيهي الشخصي فقط، ولا يجوز استخدامه لأي أغراض تجارية أو ربحية دون إذن صريح من المطوّر.
+        </div>
+      </div>
+
+      <div class="consent-term">
+        <span class="consent-term-num">٣</span>
+        <div>
+          <b>إخلاء المسؤولية</b><br>
+          يُقدَّم هذا التطبيق "كما هو" دون أي ضمانات صريحة أو ضمنية. لا يتحمل المطوّر أي مسؤولية عن أي أضرار تنشأ عن استخدام التطبيق.
+        </div>
+      </div>
+
+      <div class="consent-term">
+        <span class="consent-term-num">٤</span>
+        <div>
+          <b>البيانات الشخصية</b><br>
+          يحفظ التطبيق بيانات اللعبة (أسماء اللاعبين وإعداداتهم) على جهازك المحلي فقط عبر localStorage، ولا يتم إرسال أي بيانات إلى خوادم خارجية.
+        </div>
+      </div>
+
+      <div class="consent-term">
+        <span class="consent-term-num">٥</span>
+        <div>
+          <b>التعديلات</b><br>
+          يحتفظ المطوّر بحق تعديل هذه الشروط في أي وقت. الاستمرار في استخدام التطبيق بعد نشر أي تعديلات يُعدّ قبولاً ضمنياً لها.
+        </div>
+      </div>
+    </div>
+
+    <div class="consent-divider"></div>
+
+    <label class="consent-check-row" id="consent-check-label">
+      <div class="consent-checkbox-wrap">
+        <input type="checkbox" id="consent-checkbox" onchange="toggleConsentBtn()">
+        <div class="consent-custom-check" id="custom-check">✓</div>
+      </div>
+      <span>لقد قرأت الشروط والأحكام وأوافق عليها بالكامل</span>
+    </label>
+
+    <button class="consent-enter-btn" id="consent-btn" disabled onclick="acceptConsent()">
+      الدخول إلى التطبيق ←
+    </button>
+
+    <div class="consent-footer-copy">
+      © 2025 Abdulrahman Rabie Barakat · جميع الحقوق محفوظة
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN APP
+══════════════════════════════════════ -->
+<div id="app" class="app-hidden">
 <div class="bg-texture"></div>
 <div class="container">
 
-  <!-- ══ Screen 1: Count ══ -->
+  <!-- Screen 1: Count -->
   <div id="screen-count" class="screen active">
     <div class="top-bar">
       <div class="logo">🎭 <span>المافيا</span></div>
@@ -28,14 +112,13 @@
       </div>
       <div class="players-preview" id="players-preview"></div>
     </div>
-    <!-- Stats -->
     <div id="stats-display" class="stats-bar" style="display:none;"></div>
     <button class="btn-main" onclick="goToNames()">
       <span>التالي</span><span class="btn-arrow">←</span>
     </button>
   </div>
 
-  <!-- ══ Screen 2: Names ══ -->
+  <!-- Screen 2: Names -->
   <div id="screen-names" class="screen">
     <div class="top-bar">
       <button class="btn-back" onclick="backToCount()">→ رجوع</button>
@@ -55,7 +138,7 @@
     <button class="btn-main" onclick="goToRoles()"><span>التالي</span><span class="btn-arrow">←</span></button>
   </div>
 
-  <!-- ══ Screen 3: Roles ══ -->
+  <!-- Screen 3: Roles -->
   <div id="screen-roles" class="screen">
     <div class="top-bar">
       <button class="btn-back" onclick="showScreen('screen-names')">→ رجوع</button>
@@ -66,7 +149,7 @@
       <div class="role-row">
         <div class="role-info-col">
           <div class="role-emoji-sm">🔫</div>
-          <div><div class="role-name">المافيا</div><div class="role-desc">تقتل كل ليلة</div></div>
+          <div><div class="role-name">المافيا</div><div class="role-desc">تقتل كل ليلة · الحد الأدنى ١</div></div>
         </div>
         <div class="counter">
           <button onclick="change('mafia',-1)">−</button>
@@ -77,7 +160,7 @@
       <div class="role-row">
         <div class="role-info-col">
           <div class="role-emoji-sm">🔍</div>
-          <div><div class="role-name">المحقق</div><div class="role-desc">يكشف هوية لاعب كل ليلة</div></div>
+          <div><div class="role-name">المحقق</div><div class="role-desc">يكشف هوية لاعب كل ليلة · الحد الأدنى ١</div></div>
         </div>
         <div class="counter">
           <button onclick="change('detective',-1)">−</button>
@@ -88,7 +171,7 @@
       <div class="role-row">
         <div class="role-info-col">
           <div class="role-emoji-sm">💊</div>
-          <div><div class="role-name">الطبيب</div><div class="role-desc">ينقذ لاعب من القتل</div></div>
+          <div><div class="role-name">الطبيب</div><div class="role-desc">ينقذ لاعب من القتل · الحد الأدنى ١</div></div>
         </div>
         <div class="counter">
           <button onclick="change('doctor',-1)">−</button>
@@ -106,7 +189,7 @@
     <button class="btn-main" onclick="startGame()"><span>ابدأ اللعبة</span><span class="btn-arrow">←</span></button>
   </div>
 
-  <!-- ══ Screen 4: Reveal ══ -->
+  <!-- Screen 4: Reveal -->
   <div id="screen-reveal" class="screen">
     <div class="cover-view" id="cover-view">
       <div class="cover-icon">🤫</div>
@@ -128,23 +211,21 @@
     </div>
   </div>
 
-  <!-- ══ Screen 5: Done ══ -->
+  <!-- Screen 5: Done -->
   <div id="screen-done" class="screen">
     <div class="done-screen">
       <div class="done-emoji">🎉</div>
       <h2>كل اللاعبين شافوا أدوارهم!</h2>
       <p>اللعبة جاهزة — يمكنكم تبدأوا</p>
 
-      <!-- Win banner -->
       <div id="win-banner" style="display:none;" class="win-banner"></div>
 
-      <!-- Phase toggle -->
+      <!-- Phase -->
       <div class="card phase-card day" id="phase-card">
         <div class="phase-row">
           <div id="phase-label" class="phase-label">☀️ النهار</div>
           <button id="phase-btn" onclick="togglePhase()" class="btn-phase">🌙 تحويل الليل</button>
         </div>
-        <!-- Alive counter (host only) -->
         <div id="alive-counter" class="alive-counter"></div>
       </div>
 
@@ -185,7 +266,7 @@
         </div>
       </div>
 
-      <!-- Vote panel -->
+      <!-- Vote -->
       <div class="card">
         <div class="round-header">
           <span class="section-title">🗳 التصويت</span>
@@ -218,6 +299,11 @@
     </div>
   </div>
 
+</div><!-- /container -->
+
+<!-- Copyright bar -->
+<div class="copyright-bar">
+  © 2025 <b>Abdulrahman Rabie Barakat</b> · جميع الحقوق محفوظة · يُحظر النسخ أو إعادة التوزيع
 </div>
 
 <!-- Help overlay -->
@@ -316,7 +402,9 @@
   </div>
 </div>
 
-<button id="sound-btn" onclick="toggleSound()" class="sound-btn">🔊</button>
+</div><!-- /app -->
+
+<button id="sound-btn" onclick="toggleSound()" class="sound-btn" style="display:none;">🔊</button>
 <script src="app.js"></script>
 </body>
 </html>
