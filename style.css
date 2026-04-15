@@ -761,6 +761,7 @@ input[type=text]:focus {
   z-index: 50; backdrop-filter: blur(8px);
   display: flex; align-items: center; justify-content: center; padding: 0;
   transition: background 0.2s;
+   display: block !important;
 }
 
 /* Light mode overrides for elements that need explicit fixes */
