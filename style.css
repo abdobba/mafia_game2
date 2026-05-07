@@ -815,3 +815,74 @@ body.light .vote-row          { background: rgba(0,0,0,0.03); border-color: rgba
 body.light .vote-row.vote-leader { background: rgba(232,53,74,0.08); }
 body.light .saved-banner      { background: rgba(30,100,200,0.06); }
 body.light .notice-green      { background: rgba(40,180,80,0.08); }
+
+/* ══════════════════════════════════════════════════════════════
+   FEATURES ADDON — Theme & Stats CSS
+   © 2025 Abdulrahman Rabie Barakat
+══════════════════════════════════════════════════════════════ */
+
+/* ── Ocean Theme ─────────────────────────────────────────── */
+body.theme-ocean .phase-card.day   { background: rgba(0,160,220,0.07); border-color: rgba(0,180,255,0.2); }
+body.theme-ocean .phase-card.night { background: rgba(0,40,120,0.25);  border-color: rgba(0,80,200,0.3); }
+body.theme-ocean .vote-row         { background: rgba(0,180,255,0.04); border-color: rgba(0,180,255,0.1); }
+body.theme-ocean .vote-row.vote-leader { background: rgba(0,180,255,0.12); border-color: rgba(0,180,255,0.3); }
+body.theme-ocean .stat-item        { background: rgba(0,180,255,0.06); border-color: rgba(0,180,255,0.15); }
+body.theme-ocean .saved-banner     { background: rgba(0,120,200,0.08); }
+body.theme-ocean .notice-green     { background: rgba(0,200,150,0.08); }
+body.theme-ocean input[type=text]  { color: var(--text); }
+body.theme-ocean input[type=text]::placeholder { color: var(--text3); }
+body.theme-ocean .overlay-box      { background: var(--overlay-bg); border-color: var(--border); }
+body.theme-ocean .field-select     { background: var(--select-bg); color: var(--text); border-color: var(--border); }
+body.theme-ocean .field-select option { background: var(--select-bg); color: var(--text); }
+body.theme-ocean .round-night-select  { background: var(--input-bg); border-color: var(--border); }
+body.theme-ocean .consent-overlay  { background: var(--bg); }
+body.theme-ocean .consent-box      { background: var(--bg2); border-color: var(--border); }
+body.theme-ocean .alive-counter    { background: var(--surface); border-color: var(--border); }
+body.theme-ocean .alive-sep        { background: var(--border); }
+body.theme-ocean .round-item-detail span { color: var(--text); }
+
+/* ── Forest Theme ────────────────────────────────────────── */
+body.theme-forest .phase-card.day   { background: rgba(50,180,70,0.07); border-color: rgba(60,200,80,0.2); }
+body.theme-forest .phase-card.night { background: rgba(10,50,15,0.35);  border-color: rgba(30,100,40,0.3); }
+body.theme-forest .vote-row         { background: rgba(50,200,80,0.04); border-color: rgba(50,200,80,0.1); }
+body.theme-forest .vote-row.vote-leader { background: rgba(50,200,80,0.12); border-color: rgba(50,200,80,0.3); }
+body.theme-forest .stat-item        { background: rgba(50,200,80,0.06); border-color: rgba(50,200,80,0.15); }
+body.theme-forest .saved-banner     { background: rgba(20,120,40,0.08); }
+body.theme-forest .notice-green     { background: rgba(40,200,80,0.1); }
+body.theme-forest input[type=text]  { color: var(--text); }
+body.theme-forest input[type=text]::placeholder { color: var(--text3); }
+body.theme-forest .overlay-box      { background: var(--overlay-bg); border-color: var(--border); }
+body.theme-forest .field-select     { background: var(--select-bg); color: var(--text); border-color: var(--border); }
+body.theme-forest .field-select option { background: var(--select-bg); color: var(--text); }
+body.theme-forest .round-night-select  { background: var(--input-bg); border-color: var(--border); }
+body.theme-forest .consent-overlay  { background: var(--bg); }
+body.theme-forest .consent-box      { background: var(--bg2); border-color: var(--border); }
+body.theme-forest .alive-counter    { background: var(--surface); border-color: var(--border); }
+body.theme-forest .alive-sep        { background: var(--border); }
+body.theme-forest .round-item-detail span { color: var(--text); }
+
+/* ── Royal Theme ─────────────────────────────────────────── */
+body.theme-royal .phase-card.day   { background: rgba(140,60,220,0.07); border-color: rgba(160,80,255,0.2); }
+body.theme-royal .phase-card.night { background: rgba(40,10,80,0.4);    border-color: rgba(100,40,180,0.3); }
+body.theme-royal .vote-row         { background: rgba(160,80,255,0.04); border-color: rgba(160,80,255,0.1); }
+body.theme-royal .vote-row.vote-leader { background: rgba(160,80,255,0.12); border-color: rgba(160,80,255,0.3); }
+body.theme-royal .stat-item        { background: rgba(160,80,255,0.06); border-color: rgba(160,80,255,0.15); }
+body.theme-royal .saved-banner     { background: rgba(100,40,180,0.08); }
+body.theme-royal .notice-green     { background: rgba(120,60,220,0.08); }
+body.theme-royal input[type=text]  { color: var(--text); }
+body.theme-royal input[type=text]::placeholder { color: var(--text3); }
+body.theme-royal .overlay-box      { background: var(--overlay-bg); border-color: var(--border); }
+body.theme-royal .field-select     { background: var(--select-bg); color: var(--text); border-color: var(--border); }
+body.theme-royal .field-select option { background: var(--select-bg); color: var(--text); }
+body.theme-royal .round-night-select  { background: var(--input-bg); border-color: var(--border); }
+body.theme-royal .consent-overlay  { background: var(--bg); }
+body.theme-royal .consent-box      { background: var(--bg2); border-color: var(--border); }
+body.theme-royal .alive-counter    { background: var(--surface); border-color: var(--border); }
+body.theme-royal .alive-sep        { background: var(--border); }
+body.theme-royal .round-item-detail span { color: var(--text); }
+
+/* ── Stats display on screen-count ──────────────────────── */
+#stats-display {
+  margin-top: 0.5rem;
+}
+
